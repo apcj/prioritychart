@@ -1,0 +1,6 @@
+[
+{ "name": "Nosebleed", "probability": 2, "severity": 3 },
+{ "name": "Bus accident", "probability": 2, "severity": 3 },
+{ "name": "Stub toe", "probability": 2, "severity": 3 },
+{ "name": "Spill coffee", "probability": 2, "severity": 3 }
+]

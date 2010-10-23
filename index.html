@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML lang="en"><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <TITLE>NFR Priorities</TITLE>
+        <LINK rel="stylesheet" href="./css/prioritychart.css" type="text/css" media="screen">
+        <LINK rel="stylesheet" href="./css/jquery-ui-1.8.5.custom.css" type="text/css" media="screen">
+        <SCRIPT src="./js/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></SCRIPT>
+        <SCRIPT src="./js/jquery-ui-1.8.5.custom.min.js" type="text/javascript" charset="utf-8"></SCRIPT>
+        <SCRIPT src="./js/raphael-min.js" type="text/javascript" charset="utf-8"></SCRIPT>
+        <SCRIPT src="./js/prioritychart.js" type="text/javascript" charset="utf-8"></SCRIPT>
+        <SCRIPT type="text/javascript" charset="utf-8">
+
+		var dimensions = {
+			"dimension1": { "name": "probability", min: 0, max: 5 },
+			"dimension2": { "name": "severity", min: 0, max: 5 }
+		}
+		var measurements =
+			[
+			{ "name": "Nosebleed", "probability": 2, "severity": 3 },
+			{ "name": "Bus accident", "probability": 2, "severity": 3 },
+			{ "name": "Stub toe", "probability": 2, "severity": 3 },
+			{ "name": "Spill coffee", "probability": 2, "severity": 3 }
+			];
+
+		
+		var createRow = function(measurement) {
+			var newRow = $('.pc-prototype').clone();
+			newRow.removeClass('pc-prototype');
+		
+			newRow.find('.pc-fieldname').text(measurement.name);
+
+			var createSlider = function(dimension, dimensionClass) {
+				var valueDisplay = newRow.find('.pc-valuedisplay').filter(dimensionClass);
+				newRow.find(".pc-slider").filter(dimensionClass).slider({
+					value: measurement[dimension.name],
+					min: dimension.min,
+					max: dimension.max,
+					step: 1,
+					slide: function(event, ui) {
+						valueDisplay.text(ui.value);
+					}
+				});
+			}
+
+			createSlider(dimensions.dimension1, '.pc-dimension1');
+			createSlider(dimensions.dimension2, '.pc-dimension2');
+			
+			newRow.insertBefore($('.pc-prototype'));
+		};
+
+		$(function() {
+			for (i = 0; i < measurements.length; i++) {
+				createRow (measurements[i]);
+			}
+		});
+        </SCRIPT>
+    </HEAD><BODY>
+
+		
+		<table>
+			<tr class="pc-prototype">
+				<td class="pc-fieldname"></td>
+				<td><div class="pc-slider pc-dimension1"></div></td>
+				<td class="pc-valuedisplay pc-dimension1"></td>
+				<td><div class="pc-slider pc-dimension2"></div></td>
+				<td class="pc-valuedisplay pc-dimension2"></td>
+			</tr>
+		</table>
+		<h2>Priority Chart</h2>
+		<div class="component-chart" id="cfr-maturity-chart"></div>
+		
+		
+</BODY></HTML>
