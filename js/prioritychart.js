@@ -8,9 +8,12 @@ var drawChart = function(chartDiv, dimensions, measurements) {
 	r.image('background.png', 0, 0, plotarea.width, plotarea.height);
 
 	var assignPosition = function(measurement) {
+		var scale0To1 = function(dimension) {
+			return (measurement[dimension.name] - dimension.min) / (dimension.max - dimension.min);
+		};
 		var position = {
-			x: margins.horiz + ((5 - measurement.probability) / 4) * (plotarea.width - 2*margins.horiz),
-			y: r.height - (margins.vert + (measurement.severity / 5 * (plotarea.height - 2*margins.vert)))
+			x: margins.horiz + scale0To1(dimensions.dimension1) * (plotarea.width - 2*margins.horiz),
+			y: r.height - (margins.vert + scale0To1(dimensions.dimension2) * (plotarea.height - 2*margins.vert))
 		};
 		var hasSamePosition = function(measurement) {
 			return measurement.position && measurement.position.x === position.x && measurement.position.y === position.y;
