@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <HTML lang="en"><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
-        <TITLE>NFR Priorities</TITLE>
+        <TITLE>Priority Chart</TITLE>
         <LINK rel="stylesheet" href="./css/prioritychart.css" type="text/css" media="screen">
         <LINK rel="stylesheet" href="./css/jquery-ui-1.8.5.custom.css" type="text/css" media="screen">
         <SCRIPT src="./js/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></SCRIPT>
@@ -16,10 +16,10 @@
 		}
 		var measurements =
 			[
-			{ "name": "Nosebleed", "probability": 2, "severity": 3 },
-			{ "name": "Bus accident", "probability": 2, "severity": 3 },
-			{ "name": "Stub toe", "probability": 2, "severity": 3 },
-			{ "name": "Spill coffee", "probability": 2, "severity": 3 }
+			{ "name": "Nosebleed", "probability": 3, "severity": 2 },
+			{ "name": "Bus accident", "probability": 1, "severity": 5 },
+			{ "name": "Stub toe", "probability": 2, "severity": 2 },
+			{ "name": "Spill coffee", "probability": 5, "severity": 1 }
 			];
 
 		
@@ -52,6 +52,8 @@
 			for (i = 0; i < measurements.length; i++) {
 				createRow (measurements[i]);
 			}
+			
+			drawChart(document.getElementById('priority-chart'), dimensions, measurements)
 		});
         </SCRIPT>
     </HEAD><BODY>
@@ -67,7 +69,7 @@
 			</tr>
 		</table>
 		<h2>Priority Chart</h2>
-		<div class="component-chart" id="cfr-maturity-chart"></div>
+		<div class="pc-chart" id="priority-chart"></div>
 		
 		
 </BODY></HTML>

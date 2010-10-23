@@ -1,4 +1,4 @@
-var drawChart = function(chartDiv, nfrs) {
+var drawChart = function(chartDiv, dimensions, measurements) {
 	
 	var r = Raphael(chartDiv, 1280, 800);
 
@@ -7,13 +7,13 @@ var drawChart = function(chartDiv, nfrs) {
 
 	r.image('background.png', 0, 0, plotarea.width, plotarea.height);
 
-	var assignPosition = function(nfr) {
+	var assignPosition = function(measurement) {
 		var position = {
-			x: margins.horiz + ((5 - nfr.maturity) / 4) * (plotarea.width - 2*margins.horiz),
-			y: r.height - (margins.vert + (nfr.importance * (plotarea.height - 2*margins.vert)))
+			x: margins.horiz + ((5 - measurement.probability) / 4) * (plotarea.width - 2*margins.horiz),
+			y: r.height - (margins.vert + (measurement.severity / 5 * (plotarea.height - 2*margins.vert)))
 		};
-		var hasSamePosition = function(nfr) {
-			return nfr.position && nfr.position.x === position.x && nfr.position.y === position.y;
+		var hasSamePosition = function(measurement) {
+			return measurement.position && measurement.position.x === position.x && measurement.position.y === position.y;
 		};
 		var any = function(array, fun) {
 			for (var i = 0; i < array.length; i++) {
@@ -22,27 +22,27 @@ var drawChart = function(chartDiv, nfrs) {
 			return false;
 		}
 
-		while (any(nfrs, hasSamePosition)) {
+		while (any(measurements, hasSamePosition)) {
 			position.y = position.y + 20;
 		}
-		nfr.position = position;
+		measurement.position = position;
 	}
 
-	for (i = 0; i < nfrs.length; i++) {
-		assignPosition(nfrs[i]);
+	for (i = 0; i < measurements.length; i++) {
+		assignPosition(measurements[i]);
 	}
 
     var spots = r.set();
-	for (i = 0; i < nfrs.length; i++) {
-		var nfr = nfrs[i];
-		spots.push(r.circle(nfr.position.x, nfr.position.y, 10));
+	for (i = 0; i < measurements.length; i++) {
+		var measurement = measurements[i];
+		spots.push(r.circle(measurement.position.x, measurement.position.y, 10));
 	}
 	spots.attr({fill: "#00f", stroke: "#888", "stroke-width": 3 });
 
 	var labels = r.set();
-	for (i = 0; i < nfrs.length; i++) {
-		var nfr = nfrs[i];
-		labels.push(r.text(nfr.position.x + 20, nfr.position.y, nfr.name));
+	for (i = 0; i < measurements.length; i++) {
+		var measurement = measurements[i];
+		labels.push(r.text(measurement.position.x + 20, measurement.position.y, measurement.name));
 	}
     labels.attr({font: "12px Fontin-Sans, Arial", fill: "#000", "text-anchor": "start"});
     
