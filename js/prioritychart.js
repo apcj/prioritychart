@@ -12,28 +12,26 @@ var calculatePosition = function(dimensions, measurement) {
 	};
 }
 
+var drawSpot = function(measurement) {
+	measurement.position = calculatePosition(dimensions, measurement);
+	
+	var spot = r.circle(measurement.position.x, measurement.position.y, 10);
+	var label = r.text(measurement.position.x + 20, measurement.position.y, measurement.name);
+	spot.attr({fill: "#00f", stroke: "#888", "stroke-width": 3 });
+	label.attr({font: "12px Fontin-Sans, Arial", fill: "#000", "text-anchor": "start"});
+	measurement.spot = spot;
+	measurement.label = label;
+}
+
 var drawChart = function(chartDiv, dimensions, measurements) {
 	
-	var r = Raphael(chartDiv, plotarea.width, plotarea.height);
+	r = Raphael(chartDiv, plotarea.width, plotarea.height);
 
 	r.image('background.png', 0, 0, plotarea.width, plotarea.height);
 
-    var spots = r.set();
-	var labels = r.set();
 	for (i = 0; i < measurements.length; i++) {
-		var measurement = measurements[i];
-		measurement.position = calculatePosition(dimensions, measurement);
-		
-		var spot = r.circle(measurement.position.x, measurement.position.y, 10);
-		var label = r.text(measurement.position.x + 20, measurement.position.y, measurement.name);
-		spots.push(spot);
-		labels.push(label);
-		measurement.spot = spot;
-		measurement.label = label;
+		drawSpot(measurements[i]);
 	}
-	spots.attr({fill: "#00f", stroke: "#888", "stroke-width": 3 });
-    labels.attr({font: "12px Fontin-Sans, Arial", fill: "#000", "text-anchor": "start"});
-    
 }
 
 // var hasSamePosition = function(measurement) {

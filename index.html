@@ -11,8 +11,8 @@
         <SCRIPT type="text/javascript" charset="utf-8">
 
 		var dimensions = {
-			"dimension1": { "name": "probability", min: 0, max: 5 },
-			"dimension2": { "name": "severity", min: 0, max: 5 }
+			"dimension1": { "name": "probability", min: 0, max: 5, "default": 3 },
+			"dimension2": { "name": "severity", min: 0, max: 5, "default": 3 }
 		}
 		var measurements =
 			[
@@ -60,9 +60,17 @@
 
 		$(function() {
 			for (i = 0; i < measurements.length; i++) {
-				createRow (measurements[i]);
+				createRow(measurements[i]);
 			}
-			
+			$('#new-measurement-button').button();
+			$('#new-measurement-button').click(function() {
+				var measurement = { name: 'name' }
+				measurement[dimensions.dimension1.name] = dimensions.dimension1.default;
+				measurement[dimensions.dimension2.name] = dimensions.dimension2.default;
+				measurements.push(measurement);
+				drawSpot(measurement);
+				createRow(measurement);
+			})
 			drawChart(document.getElementById('priority-chart'), dimensions, measurements);
 		});
         </SCRIPT>
@@ -70,12 +78,15 @@
 
 		
 		<table>
-			<tr class="pc-prototype">
+			<tr class="pc-measurementrow pc-prototype">
 				<td class="pc-fieldname"></td>
 				<td><div class="pc-slider pc-dimension1"></div></td>
 				<td class="pc-valuedisplay pc-dimension1"></td>
 				<td><div class="pc-slider pc-dimension2"></div></td>
 				<td class="pc-valuedisplay pc-dimension2"></td>
+			</tr>
+			<tr>
+				<td><div id="new-measurement-button">New</div></td>
 			</tr>
 		</table>
 		<h2>Priority Chart</h2>
