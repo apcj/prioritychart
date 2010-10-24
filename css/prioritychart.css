@@ -9,3 +9,11 @@ body {
 .pc-prototype {
 	display: none;
 }
+
+.pc-editing {
+	display: none;
+}
+
+.pc-notediting {
+	display: none;
+}

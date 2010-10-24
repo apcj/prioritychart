@@ -27,17 +27,36 @@
 			var newRow = $('.pc-prototype').clone();
 			newRow.removeClass('pc-prototype');
 		
-			newRow.find('.pc-fieldname').text(measurement.name);
-
+			var measurementNameDisplay = newRow.find('.pc-measurementnamedisplay');
+			measurementNameDisplay.text(measurement.name);
+			measurementNameDisplay.dblclick(function() {
+				var measurementNameEditor = newRow.find('.pc-measurementnameeditor');
+				measurementNameEditor.val(measurement.name);
+				measurementNameEditor.removeClass('pc-notediting');
+				measurementNameDisplay.addClass('pc-editing');
+				measurementNameEditor.bind('keyup', function(e) {
+					if (e.which === $.ui.keyCode.ENTER) {
+						var newName = measurementNameEditor.val();
+						measurement.name = newName;
+						measurementNameDisplay.text(newName);
+						measurement.label.attr('text', newName);
+						measurementNameEditor.addClass('pc-notediting');
+						measurementNameDisplay.removeClass('pc-editing');
+					}
+				});
+				measurementNameEditor.focus();
+			})
+			
 			var createSlider = function(dimension, dimensionClass) {
-				var valueDisplay = newRow.find('.pc-valuedisplay').filter(dimensionClass);
+				var valueDisplayCell = newRow.find('.pc-valuedisplay').filter(dimensionClass);
+				valueDisplayCell.text(measurement[dimension.name])
 				newRow.find(".pc-slider").filter(dimensionClass).slider({
 					value: measurement[dimension.name],
 					min: dimension.min,
 					max: dimension.max,
 					step: 1,
 					slide: function(event, ui) {
-						valueDisplay.text(ui.value);
+						valueDisplayCell.text(ui.value);
 						measurement[dimension.name] = ui.value;
 						var newPosition = calculatePosition(dimensions, measurement);
 						measurement.spot.animate({
@@ -79,14 +98,17 @@
 		
 		<table>
 			<tr class="pc-measurementrow pc-prototype">
-				<td class="pc-fieldname"></td>
+				<td>
+					<span class="pc-measurementnamedisplay"></span>
+					<input type="text" class="pc-measurementnameeditor pc-notediting"></input>
+				</td>
 				<td><div class="pc-slider pc-dimension1"></div></td>
 				<td class="pc-valuedisplay pc-dimension1"></td>
 				<td><div class="pc-slider pc-dimension2"></div></td>
 				<td class="pc-valuedisplay pc-dimension2"></td>
 			</tr>
 			<tr>
-				<td><div id="new-measurement-button">New</div></td>
+				<td><button id="new-measurement-button">New</button></td>
 			</tr>
 		</table>
 		<h2>Priority Chart</h2>
