@@ -1,14 +1,16 @@
 var plotarea = { width: 1280, height: 800 };
 var margins = { horiz: 50, vert: 50 };
+var edge = 100;
+var steps = 5;
 
 var calculatePosition = function(dimensions, measurement) {
 
 	var scale0To1 = function(dimension) {
-		return (measurement[dimension.name] - dimension.min) / (dimension.max - dimension.min);
+		return (1 / 2 + measurement[dimension.name] - dimension.min) / (dimension.max - dimension.min + 1);
 	};
 	return {
-		x: margins.horiz + scale0To1(dimensions.dimension1) * (plotarea.width - 2*margins.horiz),
-		y: plotarea.height - (margins.vert + scale0To1(dimensions.dimension2) * (plotarea.height - 2*margins.vert))
+		x: scale0To1(dimensions.dimension1) * edge * steps,
+		y: (1 - scale0To1(dimensions.dimension2)) * edge * steps
 	};
 }
 
@@ -27,7 +29,13 @@ var drawChart = function(chartDiv, dimensions, measurements) {
 	
 	r = Raphael(chartDiv, plotarea.width, plotarea.height);
 
-	r.image('background.png', 0, 0, plotarea.width, plotarea.height);
+	for (x = 0; x < steps; x++) {
+		for (y = 0; y < steps; y++) {
+			var square = r.rect(x * edge, y * edge, edge, edge);
+			var hue = ((steps - 1 - Math.min(x, steps - 1 - y)) / (steps - 1)) / 3;
+			square.attr({ fill: 'hsb(' + hue + ', 1, 1)', stroke: 'none'});
+		}
+	}
 
 	for (i = 0; i < measurements.length; i++) {
 		drawSpot(measurements[i]);
