@@ -18,9 +18,9 @@ var drawSpot = function(measurement) {
 	measurement.position = calculatePosition(dimensions, measurement);
 	
 	var spot = r.circle(measurement.position.x, measurement.position.y, 10);
-	var label = r.text(measurement.position.x + 20, measurement.position.y, measurement.name);
+	var label = r.text(measurement.position.x, measurement.position.y + 20, measurement.name);
 	spot.attr({fill: "#00f", stroke: "#888", "stroke-width": 3 });
-	label.attr({font: "12px Fontin-Sans, Arial", fill: "#000", "text-anchor": "start"});
+	label.attr({font: "12px Fontin-Sans, Arial", fill: "#000", "text-anchor": "middle"});
 	measurement.spot = spot;
 	measurement.label = label;
 }
