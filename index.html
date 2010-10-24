@@ -58,14 +58,14 @@
 					slide: function(event, ui) {
 						valueDisplayCell.text(ui.value);
 						measurement[dimension.name] = ui.value;
-						var newPosition = calculatePosition(dimensions, measurement);
+						var newPositions = calculatePositions(dimensions, measurement);
 						measurement.spot.animate({
-							cx: newPosition.x,
-							cy: newPosition.y
+							cx: newPositions.spot.x,
+							cy: newPositions.spot.y
 						}, 500);
 						measurement.label.animateWith(measurement.spot, {
-							x: newPosition.x + 20,
-							y: newPosition.y
+							x: newPositions.label.x,
+							y: newPositions.label.y
 						}, 500);
 					}
 				});

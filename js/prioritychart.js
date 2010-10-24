@@ -1,22 +1,29 @@
 var edge = 100;
 var steps = 5;
 
-var calculatePosition = function(dimensions, measurement) {
+var calculatePositions = function(dimensions, measurement) {
 
 	var scale0To1 = function(dimension) {
 		return (1 / 2 + measurement[dimension.name] - dimension.min) / (dimension.max - dimension.min + 1);
 	};
-	return {
+	var spot = {
 		x: scale0To1(dimensions.dimension1) * edge * steps,
 		y: (1 - scale0To1(dimensions.dimension2)) * edge * steps
+	};
+	return {
+		spot: spot,
+		label: {
+			x: spot.x,
+			y: spot.y + 20
+		}
 	};
 }
 
 var drawSpot = function(measurement) {
-	measurement.position = calculatePosition(dimensions, measurement);
+	var positions = calculatePositions(dimensions, measurement);
 	
-	var spot = r.circle(measurement.position.x, measurement.position.y, 10);
-	var label = r.text(measurement.position.x, measurement.position.y + 20, measurement.name);
+	var spot = r.circle(positions.spot.x, positions.spot.y, 10);
+	var label = r.text(positions.label.x, positions.label.y, measurement.name);
 	spot.attr({fill: "#00f", stroke: "#888", "stroke-width": 3 });
 	label.attr({font: "12px Fontin-Sans, Arial", fill: "#000", "text-anchor": "middle"});
 	measurement.spot = spot;

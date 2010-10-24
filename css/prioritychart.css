@@ -2,6 +2,10 @@ body {
     font: 300 100.1% "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
 }
 
+td {
+	padding: 5px;
+}
+
 .pc-slider {
 	width: 200px;
 }
