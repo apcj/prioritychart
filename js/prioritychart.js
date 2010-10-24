@@ -1,5 +1,3 @@
-var plotarea = { width: 1280, height: 800 };
-var margins = { horiz: 50, vert: 50 };
 var edge = 100;
 var steps = 5;
 
@@ -27,7 +25,7 @@ var drawSpot = function(measurement) {
 
 var drawChart = function(chartDiv, dimensions, measurements) {
 	
-	r = Raphael(chartDiv, plotarea.width, plotarea.height);
+	r = Raphael(chartDiv, edge * steps, edge * steps);
 
 	for (x = 0; x < steps; x++) {
 		for (y = 0; y < steps; y++) {
