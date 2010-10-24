@@ -19,7 +19,7 @@
 			{ "name": "Nosebleed", "probability": 3, "severity": 2 },
 			{ "name": "Bus accident", "probability": 1, "severity": 5 },
 			{ "name": "Stub toe", "probability": 2, "severity": 2 },
-			{ "name": "Spill coffee", "probability": 5, "severity": 1 }
+			{ "name": "Spill coffee", "probability": 5, "severity": 0 }
 			];
 
 		
@@ -38,6 +38,16 @@
 					step: 1,
 					slide: function(event, ui) {
 						valueDisplay.text(ui.value);
+						measurement[dimension.name] = ui.value;
+						var newPosition = calculatePosition(dimensions, measurement);
+						measurement.spot.animate({
+							cx: newPosition.x,
+							cy: newPosition.y
+						}, 500);
+						measurement.label.animateWith(measurement.spot, {
+							x: newPosition.x + 20,
+							y: newPosition.y
+						}, 500);
 					}
 				});
 			}
@@ -53,7 +63,7 @@
 				createRow (measurements[i]);
 			}
 			
-			drawChart(document.getElementById('priority-chart'), dimensions, measurements)
+			drawChart(document.getElementById('priority-chart'), dimensions, measurements);
 		});
         </SCRIPT>
     </HEAD><BODY>
