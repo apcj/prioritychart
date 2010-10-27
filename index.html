@@ -11,8 +11,8 @@
         <SCRIPT type="text/javascript" charset="utf-8">
 
 		var dimensions = {
-			"dimension1": { "name": "probability", min: 1, max: 5, "default": 3 },
-			"dimension2": { "name": "severity", min: 1, max: 5, "default": 3 }
+			"dimension1": { "name": "probability", min: 1, max: 5, "defaultValue": 3 },
+			"dimension2": { "name": "severity", min: 1, max: 5, "defaultValue": 3 }
 		}
 		var measurements =
 			[
@@ -84,8 +84,8 @@
 			$('#new-measurement-button').button();
 			$('#new-measurement-button').click(function() {
 				var measurement = { name: 'name' };
-				measurement[dimensions.dimension1.name] = dimensions.dimension1.default;
-				measurement[dimensions.dimension2.name] = dimensions.dimension2.default;
+				measurement[dimensions.dimension1.name] = dimensions.dimension1.defaultValue;
+				measurement[dimensions.dimension2.name] = dimensions.dimension2.defaultValue;
 				measurements.push(measurement);
 				drawSpot(measurement);
 				createRow(measurement);
@@ -100,7 +100,7 @@
 			<tr class="pc-measurementrow pc-prototype">
 				<td>
 					<span class="pc-measurementnamedisplay"></span>
-					<input type="text" class="pc-measurementnameeditor pc-notediting"></input>
+					<input type="text" class="pc-measurementnameeditor pc-notediting">
 				</td>
 				<td><div class="pc-slider pc-dimension1"></div></td>
 				<td class="pc-valuedisplay pc-dimension1"></td>
